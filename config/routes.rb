@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   get "/contact" => "contact#new", as: :new_contact
   post "/contact" => "contact#create",  as: :contact
   root "welcome#index"
+
+  get "/questions/new" => "questions#new", as: :new_question
 end
