@@ -1,0 +1,22 @@
+<h1>Question List</h1>
+
+<ul class="list-group">
+  <% @questions.each do |ques| %>
+
+
+  <li class="list-group-item">
+    <span class="tag tag-default tag-pill pull-xs-right"> created at <%= ques.created_at %> </span>
+    <%= link_to ques.title, question_path(ques) %>
+    <%= link_to "Edit" , edit_question_path(ques), class: "btn btn-default" %>
+  </li>
+
+  <a href="<%= question_path(ques) %>" class="list-group-item list-group-item-action">
+    <span class="tag tag-default tag-pill pull-xs-right"> <%= ques.view_count %> </span>
+    <h5 class="list-group-item-heading"><%= ques.title %></h5>
+    <p class="list-group-item-text"> <%= ques.body %></p>
+  </a>
+  <% end %>
+</ul>
+
+
+<%= paginate @questions %>

@@ -1,0 +1,38 @@
+
+<%= form_for @question do |f| %>
+  <div class="form-group row">
+   <%= f.label(:title, class: "col-xs-2 col-form-label") %>
+   <div class="col-xs-10">
+     <%= f.text_field :title %>
+  </div>
+  </div>
+  <div class="form-group row">
+   <%= f.label(:body, class: "col-xs-2 col-form-label") %>
+    <div class="col-xs-10">
+     <%= f.text_area(:body, class: "form-control")%>
+     </div>
+  </div>
+  <%= f.submit (button), {class: "btn btn-danger col-xs-offset-2"}%>
+<% end %>
+
+<%# form_for is a Rails built-in form helper which generates a form that integegrates
+    nicely with a matching controller (in this case questions_controller).
+    Case 1: if @question is not persisted (not yet saved to the database), then
+            form_for will make the form send a `POST` request to `questions_path`
+            which should be defined to submit to questions controller / create action.
+            Also, if you have any attributes pre-set on any of the @question
+            fields (such as title or body). it will be pre-populate those fields.
+            One more thing, it will also add a special class if there happens to be
+            errors on a specific field
+ %>
+
+ <%# this will look for a partial names `_form.html.erb` within the same folder
+ as this file.
+ If you want to render the partial from another folder you can use the full
+ path (with in the views folder) such as: render "/questions/form"
+ Partials have access to the instance variables available in the template. So
+ In this case @question will be available in _form.html.erb.
+ If you want to pass a local variable to the partial then you can do:
+ = render "form", abc: "Hello"
+ Then you will have a variable named `abc` available in `_form` with value "Hello"
+ %>
