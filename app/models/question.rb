@@ -1,6 +1,20 @@
 class Question < ApplicationRecord
+
+  # this associates the question with answer in a one-to-many fashion
+   # this will give us handy methods to easily created associated answers and
+   # fetch associated answers as well. Note that it should be pluralized for
+   # one to many association.
+   # You should also add a dependent option. The value can be:
+   # destroy: will delete associated answers before deleting a question
+   # nullify: will make question_id `null` for associated answers before deleting
+   has_many :answers, dependent: :destroy
+
+
   validates :title, presence: true, uniqueness: {message: "must be unique"} # custom message or just use true
   validates :body , presence: true, length: {minimum: 5}
+
+
+  belongs_to :user
 
 
 

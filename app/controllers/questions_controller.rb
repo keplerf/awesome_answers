@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   # Get/ questions/new
 
   before_action :find_question, only: [:show, :edit, :update, :destroy ]
+  before_action :authenticate_user! , only: [:create, :edit, :destroy, :update,:new]
 
   QUENSTION_PER_PAGE = 10
 
@@ -19,11 +20,13 @@ class QuestionsController < ApplicationController
 
   def show
     # @question = Question.find params[:id]
+    @answer = Answer.new
   end
 
   def create
 
     @question       = Question.new question_params
+    @question.user  = current_user
 
     if @question.save
       # redirect_to question_path({id: @question.id})
