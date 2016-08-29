@@ -2,12 +2,56 @@
 
 <p><%= @question.body %> </p>
 
+<p>
+  <%= @question.tags.map {|t| t.name }.join(", ") %>
+  <!-- <% @question.tags.each do |t| %>
+    <%= t.name %>,
+  <% end %> -->
+</p>
+
+
 <% if can? :manage, @question %>
   <%= link_to "Edit", edit_question_path(@question) %>
   <%= link_to "Delete", question_path(@question),
                         method: :delete,
                         data: {confirm: "Are you sure?"} %>
 <% end %>
+<% user_like = @question.like_for current_user %>
+<% if can? :like, @question %>
+  <% if user_like.present? %>
+    <%= link_to image_tag("http://icons.veryicon.com/16/System/Line/Unlike%202.png", border: 0), question_like_path(@question, user_like), method: :delete %>
+  <% else %>
+    <%= link_to image_tag("https://www.facebook.com/images/ufi/fbfeed/like.png", border: 0), question_likes_path(@question), method: :post, class: "like" %>
+  <% end %>
+<% else %>
+  Like
+<% end  %>
+  (<%= pluralize @question.likes.count, "like" %>)
+
+  <hr>
+
+  <%# user_vote = @question.vote_for current_user %>
+
+<% if user_vote.nil? %>
+  <%= link_to 'Vote Up', question_votes_path(@question, vote: { is_up: true }),
+                         method: :post %>
+  <%= link_to 'Vote Down', question_votes_path(@question, vote: { is_up: false }),
+                           method: :post %>
+                           <% elsif user_vote.is_up? %>
+                             <%= link_to 'Remove Vote Up', question_vote_path(@question, user_vote),
+                                                           method: :delete %>
+                             <%= link_to 'Switch to Vote Down',
+                                          question_vote_path(@question, user_vote, vote: { is_up: false }),
+                                           method: :patch %>
+                           <% else %>
+ <%= link_to "Switch to Vote Up",
+             question_vote_path(@question, user_vote, vote: { is_up: true }),
+             method: :patch %>
+ <%= link_to 'Remove Vote Down', question_vote_path(@question, user_vote),
+                                 method: :delete %>
+
+<% end %>
+
 
 <h2>Create an Answer </h2>
 <%#= form_for @answer, url: question_answers_path(@question) do |f| %>

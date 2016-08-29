@@ -16,6 +16,17 @@ class Question < ApplicationRecord
 
   belongs_to :user
 
+  has_many :likes , dependent: :destroy
+  has_many :users , through: :likes
+
+  has_many :votes, dependent: :destroy
+  has_many :voting_users, through: :votes, source: :user
+
+  has_many :taggings, dependent: :destroy
+  has_many :tags, through: :taggings
+
+
+
 
 
   # This validatse that the title/body combination is unique which means that
@@ -42,6 +53,18 @@ class Question < ApplicationRecord
 
   def self.search(keyword)
     where(["title ILIKE ? OR body ILIKE ?", "%#{keyword}%", "%#{keyword}%"])
+  end
+
+  def like_for(user)
+    likes.find_by_user_id user
+  end
+
+  def vote_for(user)
+   votes.find_by_user_id user
+  end
+
+  def vote_value
+    votes.up.count - votes.down.count
   end
 
 

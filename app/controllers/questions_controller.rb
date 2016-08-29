@@ -68,7 +68,7 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit([:title, :body])
+    params.require(:question).permit([:title, :body, { tag_ids: [] }])
     # we're using the `strong parameters` feature of Rails here to only allow
    # mass-assigning the attributes that we want to allow the user to set
   #  question_params  = params.require(:question).permit([:title, :body])
@@ -77,5 +77,10 @@ class QuestionsController < ApplicationController
   def authorize
     redirect_to root_path , alert: "Access denided" unless can? :manage, @question
   end
+
+  def user_vote
+   @user_vote ||= @question.vote_for current_user
+   end
+   helper_method :user_vote
 
 end

@@ -20,6 +20,9 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'cowsay'
 
+gem 'compass-rails'
+gem 'chosen-rails'
+
 gem 'kaminari'
 
 
@@ -41,7 +44,7 @@ gem 'bcrypt', '~> 3.1.7'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'bcrypt', '~> 3.1.7'
+  # gem 'bcrypt', '~> 3.1.7'
 
   gem "faker", github: "stympy/faker"
 end
@@ -57,6 +60,8 @@ group :development do
   gem 'awesome_print'
   gem 'interactive_editor'
   gem 'hirb'
+  gem 'rails-erd'
+  gem 'letter_opener_web', '~> 1.2.0'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

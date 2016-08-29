@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:new, :create]
   resources :sessions, only: [:create, :new] do
     delete :destroy, on: :collection
-    # :collection tells we don't need to pass id 
+    # :collection tells we don't need to pass id
   end
 
   get "/home" => "welcome#index"
@@ -24,6 +24,8 @@ Rails.application.routes.draw do
     # post :search
 
     resources :answers, only: [:create, :destroy]
+    resources :likes, only: [:create, :destroy]
+    resources :votes, only: [:create, :update, :destroy]
   end
 
   # get "/questions/new" => "questions#new", as: :new_question

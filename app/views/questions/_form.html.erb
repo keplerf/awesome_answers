@@ -12,6 +12,14 @@
      <%= f.text_area(:body, class: "form-control")%>
      </div>
   </div>
+
+  <div>
+    <%= f.collection_select(:tag_ids, Tag.all, :id, :name,
+                            {},
+                            { multiple: true, class: 'chosen-select' }) %>
+  </div>
+
+
   <%#= f.drop %>
   <%= f.submit (button), {class: "btn btn-danger col-xs-offset-2"}%>
 <% end %>
@@ -37,3 +45,8 @@
  = render "form", abc: "Hello"
  Then you will have a variable named `abc` available in `_form` with value "Hello"
  %>
+
+<script type="text/javascript">
+$('.chosen-select').chosen({});
+
+</script>

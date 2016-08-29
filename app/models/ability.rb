@@ -17,6 +17,18 @@ class Ability
       can :read, :all
     end
 
+    can :manage, Question do |question|
+      user == question.user
+    end
+
+    cannot :like, Question do |question|
+      user == question.user
+    end
+
+    can :destroy, Like do |like|
+      user == like.user
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
