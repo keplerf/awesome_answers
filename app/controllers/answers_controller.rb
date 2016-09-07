@@ -17,28 +17,38 @@ class AnswersController < ApplicationController
     # answer.question_id = question.id
     @answer.question = @question
 
-    # we same the answer to the database
-    if @answer.save
-      # AnswerMailer.notify_question_owner(@answer).deliver_now
-      AnswerMailer.notify_question_owner(@answer).deliver_later
+    respond_to do |format|
 
-    # we redirect to the question show page
-      redirect_to question_path(@question), notice: "Answer created!"
-    else
-      flash[:alert] = "please fix errors below"
-      render "/questions/show"
+      # we same the answer to the database
+      if @answer.save
+        # AnswerMailer.notify_question_owner(@answer).deliver_now
+        AnswerMailer.notify_question_owner(@answer).deliver_later
+
+      # we redirect to the question show page
+        format.html { redirect_to question_path(@question), notice: "Answer created!"}
+        format.js { render :create_success }
+      else
+        flash[:alert] = "please fix errors below"
+        format.html{render "/questions/show"}
+        format.js { render :create_failure}
+      end
     end
   end
 
   def destroy
     # render json: params
-    q = Question.find params[:question_id]
-    a = Answer.find params[:id]
-    a.destroy
-    redirect_to question_path(q), notice: "Answer deleted"
+    # q = Question.find params[:question_id]
+    # a = Answer.find params[:id]
+    # a.destroy
 
+    @answer = Answer.find params[:id]
+    @answer.destroy
 
+    respond_to do |format|
 
+      format.html { redirect_to question_path(@answer.question), notice: "Answer deleted" }
+      format.js { render}
+    end
   end
 
   private

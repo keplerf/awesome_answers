@@ -29,28 +29,10 @@
   (<%= pluralize @question.likes.count, "like" %>)
 
   <hr>
+  <div id="vote">
+    <%= render 'votes' %>
+  </div>
 
-  <%# user_vote = @question.vote_for current_user %>
-
-<% if user_vote.nil? %>
-  <%= link_to 'Vote Up', question_votes_path(@question, vote: { is_up: true }),
-                         method: :post %>
-  <%= link_to 'Vote Down', question_votes_path(@question, vote: { is_up: false }),
-                           method: :post %>
-                           <% elsif user_vote.is_up? %>
-                             <%= link_to 'Remove Vote Up', question_vote_path(@question, user_vote),
-                                                           method: :delete %>
-                             <%= link_to 'Switch to Vote Down',
-                                          question_vote_path(@question, user_vote, vote: { is_up: false }),
-                                           method: :patch %>
-                           <% else %>
- <%= link_to "Switch to Vote Up",
-             question_vote_path(@question, user_vote, vote: { is_up: true }),
-             method: :patch %>
- <%= link_to 'Remove Vote Down', question_vote_path(@question, user_vote),
-                                 method: :delete %>
-
-<% end %>
 
 
 <h2>Create an Answer </h2>
@@ -70,7 +52,7 @@
 
 
 
-<%= form_for [@question, @answer] do |f| %>
+<%= form_for [@question, @answer], remote: true do |f| %>
   <div class="">
     <%= f.text_area :body %>
   </div>
@@ -79,11 +61,9 @@
 
 <% if @question.answers.any? %>
   <h2>Answer</h2>
-  <% @question.answers.each do |ans| %>
-    <%= ans.body %>
-    <%= link_to "delete", question_answer_path(@question, ans),
-                        method: :delete,
-                        data: {confirm: "Are you sure?"} %>
-    <hr>
-  <% end %>
+  <div id="answers">
+    <% @question.answers.each do |ans| %>
+      <%= render '/answers/answer' , answer: ans %>
+    <% end %>
+  </div>
 <% end %>

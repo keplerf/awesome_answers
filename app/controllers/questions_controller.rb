@@ -78,9 +78,9 @@ class QuestionsController < ApplicationController
     redirect_to root_path , alert: "Access denided" unless can? :manage, @question
   end
 
-  def user_vote
-   @user_vote ||= @question.vote_for current_user
-   end
-   helper_method :user_vote
+  # def user_vote
+  #  @user_vote ||= @question.vote_for current_user
+  #  end
+  #  helper_method :user_vote
 
 end
