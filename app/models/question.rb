@@ -25,7 +25,10 @@ class Question < ApplicationRecord
   has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
 
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history]
 
+  mount_uploader :image , ImageUploader
 
 
 
@@ -45,6 +48,10 @@ class Question < ApplicationRecord
   def titleized_title
      title.titleize
   end
+
+  # def to_param
+  #   "#{id}-#{title}".parameterize
+  # end
 
  # scope :recent_ten, lambda { order(created_at: :desc).limit(10) }
   def self.recent_ten

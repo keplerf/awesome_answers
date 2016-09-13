@@ -1,28 +1,46 @@
 
-<%= form_for @question do |f| %>
-  <div class="form-group row">
-   <%= f.label(:title, class: "col-xs-2 col-form-label") %>
+<%= simple_form_for @question do |f| %>
+
+     <%= f.input :title %>
+     <%#= f.text_area(:body, class: "form-control")%>
+     <%= f.input :body %>
+     <%= f.input :image %>
+
+  <div class="form-group">
+    <%= f.collection_select(:tag_ids, Tag.all, :id, :name,
+                            {},
+                            { multiple: true, class: 'chosen-select form-control' }) %>
+
+  <%#= f.drop %>
+  </div>
+    <%= f.submit (button), {class: "btn btn-danger"}%>
+
+
+<% end %>
+
+  <!-- <div class="form-group row">
+   <%#= f.label(:title, class: "col-xs-2 col-form-label") %>
    <div class="col-xs-10">
-     <%= f.text_field :title %>
+     <%#= f.text_field :title %>
   </div>
   </div>
   <div class="form-group row">
-   <%= f.label(:body, class: "col-xs-2 col-form-label") %>
+   <%#= f.label(:body, class: "col-xs-2 col-form-label") %>
     <div class="col-xs-10">
-     <%= f.text_area(:body, class: "form-control")%>
+     <%#= f.text_area(:body, class: "form-control")%>
      </div>
   </div>
 
   <div>
-    <%= f.collection_select(:tag_ids, Tag.all, :id, :name,
+    <%#= f.collection_select(:tag_ids, Tag.all, :id, :name,
                             {},
                             { multiple: true, class: 'chosen-select' }) %>
   </div>
 
 
   <%#= f.drop %>
-  <%= f.submit (button), {class: "btn btn-danger col-xs-offset-2"}%>
-<% end %>
+  <%#= f.submit (button), {class: "btn btn-danger col-xs-offset-2"}%> -->
+<% #end %>
 
 <%# form_for is a Rails built-in form helper which generates a form that integegrates
     nicely with a matching controller (in this case questions_controller).

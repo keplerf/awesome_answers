@@ -15,6 +15,16 @@ Rails.application.routes.draw do
   post "/contact" => "contact#create",  as: :contact
   root "welcome#index"
 
+
+  namespace :api, defaults: { format: :json } do
+    namespace :v1 do
+      resources :questions, only: [:index, :show]
+    end
+  end
+
+
+  # get 'api/v1/questions' => 'api/v1/questions#index'
+
   resources :questions do
     # # collection is used when we don't need to specify a particular question but we expect a collection of question. Examples: index / create
     # post :search, on: :collection

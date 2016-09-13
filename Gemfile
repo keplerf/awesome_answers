@@ -17,13 +17,18 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-
+gem 'friendly_id', '~> 5.1.0'
 gem 'cowsay'
+gem 'simple_form'
+gem 'carrierwave', '>= 1.0.0.beta', '< 2.0'
 
 gem 'compass-rails'
 gem 'chosen-rails'
+gem 'mini_magick'
+gem "rails-erd"
 
 gem 'kaminari'
+gem 'rack-cors', :require => 'rack/cors'
 
 
 # Use jquery as the JavaScript library
